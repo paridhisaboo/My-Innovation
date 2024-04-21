@@ -33,10 +33,40 @@
 					<section id="main" class="wrapper">
 						<div class="inner">
 							<h1 class="major">Working of the Model</h1>
-							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
-						</div>
+							<h2>1. Hand Pose Estimation with a Pre-Trained Pipeline:</h3>
+							<ul>
+								<li><b>MediaPipe as a Swiss Army Knife: </b>We leverage MediaPipe's pre-built hand pose estimation pipeline, a well-optimized solution for extracting hand keypoints (landmarks) from video frames. This approach bypasses the need to manually design and train a hand detection model from scratch, saving development time and computational resources.</li>
+								<br>
+								<li><b>OpenCV's Stream Processing: </b>OpenCV acts as the image acquisition and pre-processing workhorse. It grabs frames from the ESP32 camera and performs any necessary pre-processing (e.g., normalization, noise reduction) to enhance MediaPipe's hand detection accuracy.</li>
+							</ul>
+							<h2>2. Leveraging a Lightweight Classification Model:</h3>
+								<ul>
+									<li><b>Teachable Machine for Rapid Prototyping: </b>We employ a machine learning model trained using Teachable Machine, a user-friendly platform specifically designed for creating basic image classifiers without extensive coding expertise. This allows for rapid exploration of different finger count detection models.									</li>
+									<br>
+									<li><b>Training Data Considerations: </b>The model's efficacy hinges on a well-curated training dataset. This dataset should encompass diverse hand shapes, skin tones, lighting conditions, and backgrounds to bolster the model's generalization capabilities. Data augmentation techniques can further enrich the training data by creating variations of existing images.									</li>
+									<br>
+									<li><b>Real Time Inference: </b>The trained Teachable Machine model operates in real-time, analyzing incoming video frames (captured by OpenCV) and inferring the number of fingers held up in the hand based on the extracted features (likely landmark positions and their relative distances).</li>
+								</ul>
+							<h2>3. Interfacing with Arduino for Action Control:</h3>
+								<ul>
+									<li><b>Python as a Bridge: </b>The Python program bridges the gap between the camera, the machine learning model, and the Arduino Nano. It likely utilizes libraries like serial to communicate with the Arduino via its serial port, transmitting control signals based on the predicted finger count.									</li>
+									<br>
+									<li><b>Arduino Takes Action: </b>The Arduino Nano, programmed with custom logic, interprets the control signals received from the Python program. Each activated pin on the Arduino can be mapped to control specific external devices. This allows for flexible control over various functionalities based on the detected finger count.									</li>
+								</ul>
+							
+							<h2>In essence, the system functions as follows:</h2>
+							<ol>
+								<li>The Python program captures video frames from the ESP32 camera using OpenCV.</li>
+								<li>OpenCV performs any necessary pre-processing on the frames.</li>
+								<li">Frames are fed into MediaPipe's pre-trained hand pose estimation pipeline.</li>
+								<li>MediaPipe extracts hand landmarks, providing a skeletal representation of the hand.</li>
+								<li>The hand image or landmark data is fed into the Teachable Machine model.</li>
+								<li>The model predicts the number of fingers based on the processed data.</li>
+								<li>The Python program transmits the predicted finger count to the Arduino Nano via serial communication.</li>
+								<li>The Arduino code activates a specific pin corresponding to the predicted finger count.</li>
+								<li>This activated pin controls external devices programmed in the Arduino code.</li>
+							</ol>
+							</div>
 					</section>
 
 			</div>
